@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Property Calculator 2.0</title>
+		<meta name="author" content="Alex" />
+		<!-- Date: 2015-03-28 -->
+	</head>
+	<body>
+		<script type="text/javascript">
+		///FILE: PropertyCalculator2.html
+		///PROG: Alex Mandigo
+		///PURP: To calculate costs of pool and sod installations.
+		
+		var userName = "";
+		var KENTUCKY = 1.47;
+		var CAROLINA = .57;
+		var SODLABORRATE = 6.95;
+		var POOLDEPTH = 7;
+		var WATERDEPTH = 6;
+		var POOLAREACOST = 18.95;
+		var HEATANDFILTER = 1575.00;
+		var POOLMAXLENGTH = .75;
+		var POOLMAXWIDTH = .5;
+		var SODYARDDIVIDER = 3;
+		var SODINSTALLTIME = 3;
+		var SODTIMEDIVIDER = 60;
+		var propLength = 0.0;
+		var propWidth = 0.0;
+		var homeLength = 0.0;
+		var homeWidth = 0.0;
+		var sodType = "";
+		var propArea = 0.0;
+		var homeArea = 0.0;
+		var poolLength = 0.0;
+		var poolWidth = 0.0;
+		var poolArea = 0.0;
+		var poolVol = 0.0;
+		var waterVol = 0.0;
+		var heatUnit = "";
+		var poolLabor = 0.00;
+		var poolTotal = 0.00;
+		var stuffInTheWay = 0.0;
+		var sodAreaFt = 0.0;
+		var sodAreaYard = 0.0;
+		var sodPrice = 0.00;
+		var sodCostTotal = 0.00;
+		var sodLaborTimeMin = 0.0;
+		var sodLaborTimeHour = 0.0;
+		var sodLaborTotal = 0.00;
+		var sodTotal = 0.00;
+		
+		///Input
+		userName = prompt("Welcome to the new and improved Property Calculator 2.0! What is your name?","");
+		propLength = prompt("Hey, " + userName + ". To get started, I'd like to ask you a few questions. First off, what is the length of the property (in feet)?","0.0");
+		propWidth = prompt("Excellent. Next, what is the width of the property (in feet)?","0.0");
+		homeLength = prompt("Now, what is the length of the house (in feet)?","0.0");
+		homeWidth = prompt("Good, and what is the width of the house (in feet)?","0.0");
+		sodType = prompt("Now here comes the important question! Would you like (K)entucky blue grass or (S)outh Carolina rye installed on your property? Please make a selection (K, S)","K");
+		
+		///Conversions
+		propLength = parseFloat(propLength);
+		propWidth = parseFloat(propWidth);
+		homeLength = parseFloat(homeLength);
+		homeWidth = parseFloat(homeWidth);
+		sodType = sodType.toUpperCase();
+
+		///Calculations
+		propArea = propLength * propWidth;
+		homeArea = homeLength * homeWidth;
+		poolLength = propWidth * POOLMAXLENGTH;
+		poolWidth = propWidth * POOLMAXWIDTH;
+		poolArea = poolLength * poolWidth;
+		poolVol = poolArea * POOLDEPTH;
+		waterVol = poolArea * WATERDEPTH;
+		
+		if (waterVol <= 3100) ///Beginning if
+		{
+			heatUnit = "A";
+		}
+		else if (waterVol <= 8000)
+			 {
+			 	 heatUnit = "B";
+			 }
+			 else if (waterVol <= 15000)
+			 	  {
+			 	  	  heatUnit = "C";
+			 	  }
+			 	  else if (waterVol <= 25000)
+			 	  	   {
+			 	  	   	   heatUnit = "D";
+			 	  	   }
+			 	  	   else
+			 	  	   {
+			 	  	   	heatUnit = "E";
+			 	  	   }///Ending if
+		
+		poolLabor = poolArea * POOLAREACOST;
+		poolTotal = poolLabor + HEATANDFILTER;
+		stuffInTheWay = homeArea + poolArea;
+		sodAreaFt = propArea - stuffInTheWay;
+		sodAreaYard = sodAreaFt / SODYARDDIVIDER;
+		
+		if (sodType == "K") ///Beginning if
+		{
+			sodPrice = KENTUCKY;
+		}
+		else
+		{
+			sodPrice = CAROLINA;
+		}///Ending if
+		
+		sodCostTotal = sodAreaYard * sodPrice;
+		sodLaborTimeMin = sodAreaYard * SODINSTALLTIME;
+		sodLaborTimeHour = sodLaborTimeMin / SODTIMEDIVIDER;
+		sodLaborTotal = SODLABORRATE * sodLaborTimeHour;
+		sodTotal = sodLaborTotal + sodCostTotal;
+		
+		///Output
+		document.write("Welcome to the new and improved Property Calculator 2.0!<br>");
+		document.write("Alright, " + userName + ". To recap, here is the information you've given me:<br>");
+		document.write("Property Length = " + propLength.toFixed(1) + "<br>");
+		document.write("Property Width = " + propWidth.toFixed(1) + "<br>");	
+		document.write("House Length = " + homeLength.toFixed(1) + "<br>");
+		document.write("House Width = " + homeWidth.toFixed(1) + "<br>");
+		document.write("And from there, I was able to crunch a few numbers for you...<br>");
+		document.write("The area of your property is " + propArea.toFixed(1) + " square ft.<br>");
+		document.write("The area of your house should be " + homeArea.toFixed(1) + " square ft.<br>");
+		document.write("The area of your pool comes out to " + poolArea.toFixed(1) + " square ft.<br>");
+		document.write("And to keep all that water warm, you'll need heating unit " + heatUnit + ".<br>");
+		document.write("The price of the pool plus the installation fees is going to be $" + poolTotal.toFixed(2) + ".<br>");
+		document.write("The amount of sod you'll need to get is " + sodAreaFt.toFixed(1) + " square ft.<br>");
+		document.write("And the total cost of the sod plus installation is going to be $" + sodTotal.toFixed(2) + "<br>");
+		document.write("Thank you for using the Property Calculator, " + userName + ", and have a wonderful day!");
+		
+		///END PROGRAM
+		</script> 
+	</body>
+</html>
+
